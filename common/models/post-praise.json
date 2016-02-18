@@ -1,0 +1,36 @@
+{
+  "name": "PostPraise",
+  "plural": "post-praises",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "strict": true,
+  "options": {
+    "validateUpsert": true,
+    "mongodb": {
+      "collection": "forum_post_praises"
+    }
+  },
+  "properties": {
+    "id": {
+      "id": true,
+      "generated": true
+    },
+    "userId": {
+      "type": "string",
+      "required": true
+    },
+    "created": {
+      "type": "date",
+      "defaultFn": "now"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "post": {
+      "type": "belongsTo",
+      "model": "Post"
+    }
+  },
+  "acls": [],
+  "methods": []
+}

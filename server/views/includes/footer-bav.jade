@@ -1,0 +1,6 @@
+.footer-nav-bar.row
+  - each nav in navData
+    div(class="nav-item col #{nav.icon}") &nbsp;#{nav.title}
+      .nav-subs(data-item-count="#{nav.subs.length}")
+        - each sub in nav.subs
+          a.nav-sub-item(href="#{sub.url}") #{sub.title}

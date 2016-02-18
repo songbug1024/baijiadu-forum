@@ -1,0 +1,9 @@
+extends ../layouts/base
+
+block title
+  title 跨域
+block main
+  #data-input #{data}
+block scripts
+  script.
+    parent.iFrameUploadResult(document.getElementById('data-input').innerText);

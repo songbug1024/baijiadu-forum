@@ -1,0 +1,67 @@
+extends ../layouts/base
+
+block metas
+  meta(name="Author" content="百家渡")
+  meta(name="keywords" content="百家渡,百家花圃,百家论坛,多肉,多肉论坛")
+  meta(name="Description" content="百家渡")
+  meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+block title
+  title 百家渡
+
+block stylesheets
+  link(rel="stylesheet" type="text/css" href="/forum/css/ionic.min.css")
+  link(rel="stylesheet" type="text/css" href="/forum/css/style.css")
+
+block scripts
+  script(type="text/javascript" src="/forum/js/libs/ionic/1.0.0/ionic.min.js")
+  script(type="text/javascript" src="/forum/js/dist/bundles/detail.js")
+
+block main
+  include ../includes/footer-bav
+  #mask-bg(style="display: none;")
+  #new-comment
+    .title 回复
+    .wrapper
+      textarea.comment-content(placeholder="输入内容（5~500）" minlength="5" maxlength="500")
+    .save-btn 确定
+  #post-detail.tab(data-id="#{post.id}")
+    .tab-header
+      div(class="tab-title #{post.cat}") #{post.catName}
+      .tab-edit
+      a.tab-back(href="/")
+    .tab-content.post-item
+      h1.post-title
+        - if (post.isTop)
+          a(class="post-is-top icon-left ion-flag") 置顶
+        - if (post.hasImage)
+          a(class="post-has-image icon-left ion-image")
+        - if (!post.isTop && !post.hasImage)
+          a(class="post-is-text icon-left ion-document-text")
+        | &nbsp;#{post.title}
+      .post-body
+        img.coll-left.post-avatar(src="#{post.avatar || '/forum/images/avatar.jpg'}")
+        .coll-right
+          .header-info
+            span.post-created #{post.createdStr}
+            p(class="post-author-name icon-left ion-ios-person") &nbsp;#{post.username}
+            p(class="post-author-location icon-left ion-ios-location") &nbsp;#{post.location}
+          .content-info
+            .post-content #{post.content}
+            - if (post.hasImage)
+              - var colSize = 2;
+              - var imageCount = post.uploadImagesJSON.length;
+              - var rows = Math.ceil(imageCount / colSize);
+              .post-images
+                - for (var i = 0; i < rows; i++)
+                  .row
+                    - for (var j = 0; j < colSize; j++)
+                      - var index = i * colSize + j;
+                      - if (index < imageCount)
+                        div(class="col preview-image resize-img" data-data="#{encodeURIComponent(JSON.stringify(post.uploadImagesJSON[index]))}")
+          .operations-info
+            a(class="post-hit-num icon-left ion-eye") &nbsp;#{post.hitNum}
+            a(class="post-praise-num icon-left ion-thumbsup#{post.isPraised ? ' praised' : ''}") &nbsp;#{post.praiseNum}
+            a(class="post-comment-num icon-left ion-chatbox-working") &nbsp;#{post.commentNum}
+      h2.comments-title.icon-left.ion-clipboard &nbsp;帖子回复
+      .post-comments

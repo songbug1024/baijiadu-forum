@@ -1,0 +1,92 @@
+{
+  "name": "Post",
+  "plural": "posts",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "strict": true,
+  "options": {
+    "validateUpsert": true,
+    "mongodb": {
+      "collection": "forum_posts"
+    }
+  },
+  "properties": {
+    "id": {
+      "id": true,
+      "generated": true
+    },
+    "userId": {
+      "type": "string",
+      "required": true
+    },
+    "username": {
+      "type": "string",
+      "required": true
+    },
+    "avatar": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "string",
+      "required": true
+    },
+    "uploadImages": {
+      "type": "string"
+    },
+    "commentNum": {
+      "type": "number",
+      "default": 0
+    },
+    "hitNum": {
+      "type": "number",
+      "default": 0
+    },
+    "praiseNum": {
+      "type": "number",
+      "default": 0
+    },
+    "isTop": {
+      "type": "boolean",
+      "default": false
+    },
+    "created": {
+      "type": "date",
+      "defaultFn": "now"
+    },
+    "modified": {
+      "type": "date",
+      "defaultFn": "now"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "viewers": {
+      "type": "hasMany",
+      "model": "PostViewer",
+      "foreignKey": "postId"
+    },
+    "praises": {
+      "type": "hasMany",
+      "model": "PostPraise",
+      "foreignKey": "postId"
+    },
+    "comments": {
+      "type": "hasMany",
+      "model": "Comment",
+      "foreignKey": "postId"
+    }
+  },
+  "acls": [],
+  "methods": []
+}
